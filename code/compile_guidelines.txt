@@ -1,0 +1,3 @@
+command line to compile:
+	
+	g++ main.cpp state.cpp

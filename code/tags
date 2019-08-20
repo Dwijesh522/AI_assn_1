@@ -1,0 +1,16 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		float cost;$/;"	m	language:C++	class:state
+cost_matrix	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^int cost_matrix[5][5] = {{0,2,2,2,1}, {2,0,2,2,1}, {2,2,0,2,1}, {2,2,2,0,1}, {1,1,1,1,0}};$/;"	v	language:C++
+dash_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^float dash_cost=3;$/;"	v	language:C++
+genes	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		vector<vector<int>*> genes;$/;"	m	language:C++	class:state
+get_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		float get_cost();	$/;"	p	language:C++	class:state
+get_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^float state::get_cost()$/;"	f	language:C++	class:state
+get_intergene_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^float get_intergene_cost(vector<int> gene1, vector<int> gene2)$/;"	f	language:C++
+get_number_of_dashes	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^int get_number_of_dashes(vector<int> gene)$/;"	f	language:C++
+main	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^int main()$/;"	f	language:C++
+push_gene_seq	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		void push_gene_seq(vector<int>*);$/;"	p	language:C++	class:state
+push_gene_seq	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^void state::push_gene_seq(vector<int>* p)$/;"	f	language:C++	class:state
+state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		state();$/;"	p	language:C++	class:state
+state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^class state$/;"	c	language:C++
+state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^state::state()$/;"	f	language:C++	class:state
+v	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^int v=4;$/;"	v	language:C++
