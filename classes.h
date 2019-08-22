@@ -14,10 +14,11 @@ class state
 {
 //private:
 public:
-	vector<vector<int>*> genes;
+	vector<vector<int>> genes;
 	float cost;
 public:
 	state();
 	void push_gene_seq(vector<int>);
+	void push_init_seq(vector<int> p);
 	float get_cost();
 };

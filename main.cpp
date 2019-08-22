@@ -56,9 +56,7 @@ int main()
 					}
 				}
 			}
-			cout << "debug1" << endl;
-			state1.push_gene_seq(temp);
-			cout << "debug2" << endl;
+			state1.push_init_seq(temp);
 		}
 		getline(inp, line);
 		dash_cost = stof(line);
@@ -68,16 +66,18 @@ int main()
 		{
 			for (int j = 0; j < v_size + 1; j++)
 			{
-				cout << 3 << endl;
 				float temp;
 				inp >> temp;
+				cout << temp << " ";
 				cost_matrix[i*(v_size + 1) + j] = temp;
 			}
+			cout << endl;
 		}
-		//finish parsing
+		// pointer is in the same line of cost matrix.
 		getline(inp,line);
-		if (line == "#") {break; cout << "end";}
+		// Now pointer points to next line, so we can read #
+		getline(inp, line);	
+		if (line == "#") {cout << "endl\n"; break;}
 	}
-
 	return 0;
 }

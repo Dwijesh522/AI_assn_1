@@ -1,0 +1,21 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/classes.h	/^	float cost;$/;"	m	language:C++	class:state
+cost_matrix	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/main.cpp	/^ float *cost_matrix; \/\/ Matching array$/;"	v	language:C++
+dash_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/main.cpp	/^ float dash_cost;$/;"	v	language:C++
+genes	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/classes.h	/^	vector<vector<int>> genes;$/;"	m	language:C++	class:state
+get_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/classes.h	/^	float get_cost();$/;"	p	language:C++	class:state
+get_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/state.cpp	/^float state::get_cost()$/;"	f	language:C++	class:state
+get_intergene_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/state.cpp	/^float get_intergene_cost(vector<int> gene1, vector<int> gene2)$/;"	f	language:C++
+get_number_of_dashes	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/state.cpp	/^int get_number_of_dashes(vector<int> gene)$/;"	f	language:C++
+K	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/main.cpp	/^ int K;$/;"	v	language:C++
+main	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/main.cpp	/^int main()$/;"	f	language:C++
+push_gene_seq	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/classes.h	/^	void push_gene_seq(vector<int>);$/;"	p	language:C++	class:state
+push_gene_seq	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/state.cpp	/^void state::push_gene_seq(vector<int> p)$/;"	f	language:C++	class:state
+push_init_seq	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/classes.h	/^	void push_init_seq(vector<int> p);$/;"	p	language:C++	class:state
+push_init_seq	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/state.cpp	/^void state::push_init_seq(vector<int> p)$/;"	f	language:C++	class:state
+state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/classes.h	/^	state();$/;"	p	language:C++	class:state
+state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/classes.h	/^class state$/;"	c	language:C++
+state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/state.cpp	/^state::state()$/;"	f	language:C++	class:state
+Time	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/main.cpp	/^ float Time;$/;"	v	language:C++
+vocab	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/main.cpp	/^ vector<char> vocab;$/;"	v	language:C++
+v_size	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/main.cpp	/^ int v_size;$/;"	v	language:C++
