@@ -1,5 +1,6 @@
 #pragma once
 #include<vector>
+#include<string>
 using namespace std;
 
 //GLOBAL Variables
@@ -21,5 +22,7 @@ public:
 	void push_gene_seq(vector<int>);
 	void push_init_seq(vector<int> p);
 	vector<state> neighbourhood_states(float prob_grd_rnd, bool tabu, bool restart, bool stochastic, int beam_size);
+	state get_random_shuffling();
 	float get_cost();
+	void print();
 };

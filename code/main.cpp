@@ -17,7 +17,7 @@ using namespace std;
 int main()
 {
 	state state1 = state();
-	//file PARSING
+	// ------------------------------------------- file PARSING start ---------------------------------------------------
 	ifstream inp;
 	inp.open("input.txt");
 	string line;
@@ -30,20 +30,14 @@ int main()
 		getline(inp, line);
 		//VOCABULARY
 		for (int i = 0; i < v_size; i++)
-		{
 			vocab.push_back(line[3 * i]);
-			cout << line[3*i] << endl;
-		}
 		getline(inp, line);
 		K = stoi(line);
-		cout << K << endl;
 		//input strings
 		for (int i = 0; i < K; i++)
 		{
-			cout << i << endl;
 			getline(inp, line);
 			vector<int> temp;
-			cout << line << endl;
 			for (int j = 0; j < line.length(); j++)
 			{
 				char temp1 = line[j];
@@ -52,6 +46,11 @@ int main()
 					if(vocab[k] == temp1)
 					{
 						temp.push_back(k);
+						break;
+					}
+					else if(temp1 == '-')	
+					{
+						temp.push_back(v_size);
 						break;
 					}
 				}
@@ -68,16 +67,20 @@ int main()
 			{
 				float temp;
 				inp >> temp;
-				cout << temp << " ";
-				cost_matrix[i*(v_size + 1) + j] = temp;
 			}
-			cout << endl;
 		}
 		// pointer is in the same line of cost matrix.
 		getline(inp,line);
 		// Now pointer points to next line, so we can read #
 		getline(inp, line);	
-		if (line == "#") {cout << "endl\n"; break;}
+		if (line == "#") {break;}
 	}
+	// ------------------------------------------- file PARSING end ---------------------------------------------------
+	// ------------------------------------------- random walk example start-------------------------------------------
+	state1.print();
+	vector<state> neigh_states = state1.neighbourhood_states(0, false, false, false, 3);
+	for(int i=0; i< neigh_states.size(); i++)
+		neigh_states[i].print();
+	// ------------------------------------------- random walk example end-------------------------------------------
 	return 0;
 }

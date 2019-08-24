@@ -2,39 +2,29 @@
 // thete are k strings
 #include<iostream>
 #include<vector>
+#include<ctime>
 #include "classes.h"
+#include "functions.h"
 
 using namespace std;
-
-//size of vocabulary
-
-int get_number_of_dashes(vector<int> gene)
-{
-	int size = gene.size(), dashes = 0;
-	for (int i = 0; i < size; i++)
-		if (gene[i] == v_size)
-			dashes++;
-	return dashes;
-}
-float get_intergene_cost(vector<int> gene1, vector<int> gene2)
-{
-	float intergene_cost = 0;
-	int size;
-	// initially for the first time, while reading the file, sizes of the strings will not be same. Afterwords it must be the same
-	if(gene1.size() <= gene2.size())	size = gene1.size();
-	else					size = gene2.size();
-		
-	for (int i = 0; i < size; i++)
-		intergene_cost += cost_matrix[gene1[i]*(v_size+1)+gene2[i]];
-	return intergene_cost;
-}
-
 //methods of the class: state
 //constructor
 state::state()
 {
 	this->cost = 0;
 	this->string_length = 0;
+}
+void state::print()
+{
+	cout << "---------------------------------\n";
+	for(int i=0; i<K; i++)
+	{
+		for(int j=0; j<this->string_length; j++)
+			cout << genes[i][j] << " ";
+		cout << endl;
+	}
+	cout << "cost of this state is: " << this->cost << endl;
+	cout << "string length: " << string_length << endl;
 }
 // add a gen sequence to state
 void state::push_gene_seq(vector<int> p)
@@ -52,12 +42,46 @@ void state::push_gene_seq(vector<int> p)
 // while initially storing the strings into the states, we can not calculate its cost, bcz cost matrix has not been read yet.
 void state::push_init_seq(vector<int> p)
 {
+	this->string_length = p.size();
 	genes.push_back(p);
 }
-// returns cost of this state
-float state::get_cost()
+// returns one random neighbouring state
+// if no neighbour state exists then returns an empty state.
+state state::get_random_shuffling()
 {
-	return this->cost;
+	state neighbour;
+	srand(time(0));
+	int random_str_ind = rand()%K;
+	bool any_dash = false;
+	int counter = 0;	//number of strings that does not have any dashes
+	while( (not any_dash) and counter < K)
+	{
+		vector<int> kth_string = genes[random_str_ind];		 // kth randomly picked string
+		vector<int> dash_indices = get_dash_indices(kth_string); // function defined in functions.h file
+		int number_of_dash_indices = dash_indices.size();
+		if(number_of_dash_indices)
+		{
+			int random_dash_ind = rand()%number_of_dash_indices;	// select random dash to swap
+			any_dash = true;
+			for(int i=0; i<K; i++)
+			{
+				if(i == random_str_ind)
+				{
+					vector<int> swapped_string = swap_string(this->genes[i], random_dash_ind, rand()%2);
+					neighbour.push_gene_seq(swapped_string);
+				}
+				else
+					neighbour.push_gene_seq(this->genes[i]);
+			}
+		}
+		else
+		{
+			counter++;
+			if(random_str_ind <= K-2)	random_str_ind++;
+			else				random_str_ind=0;
+		}
+	}
+	return neighbour;
 }
 
 vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool restart, bool stochastic, int beam_size)
@@ -72,5 +96,28 @@ vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool re
 	// 					if stochastic = true : q_dash = fxn of steepness of the state
 	// 					else		     : q_dash = 1 for best k solutions
 	// 									0 for others
-	// beam_size			: 	number of neighbours returned.
+	// beam_size			: 	 = k = number of neighbours returned.
+	
+	vector<state> neighbours;
+
+	//-----------------------------------------------------------------------------------------------
+	// Random walk: (0, false, false, false, k)
+	// ----------------------------------------------------------------------------------------------
+	
+	
+	if(prob_grd_rnd)
+	{
+
+	}
+	else
+	{
+		// random walk
+		for(int i=0; i<K; i++)
+		{
+			state neighbour = this->get_random_shuffling();
+			neighbours.push_back(neighbour);
+		}
+	}
+
+	return neighbours;
 }
