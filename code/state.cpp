@@ -49,8 +49,7 @@ void state::push_init_seq(vector<int> p)
 // if no neighbour state exists then returns an empty state.
 state state::get_random_shuffling()
 {
-	state neighbour;
-	srand(time(0));
+	state neighbour;	
 	int random_str_ind = rand()%K;
 	bool any_dash = false;
 	int counter = 0;	//number of strings that does not have any dashes
@@ -67,7 +66,7 @@ state state::get_random_shuffling()
 			{
 				if(i == random_str_ind)
 				{
-					vector<int> swapped_string = swap_string(this->genes[i], random_dash_ind, rand()%2);
+					vector<int> swapped_string = swap_string(this->genes[i], dash_indices[random_dash_ind], rand()%2);
 					neighbour.push_gene_seq(swapped_string);
 				}
 				else
@@ -112,6 +111,7 @@ vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool re
 	else
 	{
 		// random walk
+		srand(time(0));
 		for(int i=0; i<K; i++)
 		{
 			state neighbour = this->get_random_shuffling();

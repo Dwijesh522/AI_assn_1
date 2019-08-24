@@ -20,15 +20,29 @@ vector<int> swap_string(vector<int> gene, int index, int prob_left_move)
 	int gene_size = gene.size();
 	// can not be moved left so move dash to right
 	if(index == 0)	prob_left_move = 0;
+	else if(index == gene_size-1)	prob_left_move = 1;
 	// index th element is a dash
 	// first: (index-prob_left_move) == either a (index)th or (index-1)th charecter
-	for(int i=0; i<gene_size; i++)
-		if(i == index-prob_left_move)
-			swapped_string.push_back(gene[i+1]);
-		else if(i == index)
-			swapped_string.push_back(gene[i-1]);
-		else
-			swapped_string.push_back(gene[i]);
+	if(prob_left_move)
+	{
+		for(int i=0; i<gene_size; i++)
+			if(i == index-1)
+				swapped_string.push_back(v_size);
+			else if(i == index)
+				swapped_string.push_back(gene[i-1]);
+			else
+				swapped_string.push_back(gene[i]);
+	}
+	else
+	{
+		for(int i=0; i<gene_size; i++)
+			if(i == index)
+				swapped_string.push_back(gene[i+1]);
+			else if(i == index+1)
+				swapped_string.push_back(v_size);
+			else
+				swapped_string.push_back(gene[i]);
+	}
 	return swapped_string;
 }
 //size of vocabulary
