@@ -14,6 +14,10 @@ state::state()
 	this->cost = 0;
 	this->string_length = 0;
 }
+void state::modify_cost(float cost)
+{
+	this->cost = cost;
+}
 void state::print()
 {
 	cout << "---------------------------------\n";
@@ -100,19 +104,101 @@ vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool re
 	vector<state> neighbours;
 
 	//-----------------------------------------------------------------------------------------------
-	// Random walk: (0, false, false, false, k)
+	// Random walk: 							(0, false, false, false, k)
+	// Greedy best neighbour, non-tabu, non-restart, non-stochastic:	(1, false, false, false, k)
 	// ----------------------------------------------------------------------------------------------
-	
-	
-	if(prob_grd_rnd)
+		
+	// Greedy best neighbour, non-tabu, non-restart, non-stochastic
+	if(prob_grd_rnd==1 and not tabu and not restart and not stochastic)
 	{
-
+		k_max_heap heap = k_max_heap(beam_size);
+		for(int i=0; i<K; i++)	// ith string
+		{
+			for(int j=0; j<string_length; j++)	// jth character
+			{
+				if(genes[i][j] == v_size)	// is a dash
+				{
+					// calculate the new cost due to "LEFT" swapping
+					if(j != 0)
+					{
+						float new_cost = this->cost;
+						for(int m=0; m<K; m++)
+						{
+							if(m != i)
+							{
+								new_cost += 	(cost_matrix[genes[m][j-1]*(v_size+1) + genes[i][j]] +
+										cost_matrix[genes[m][j]*(v_size+1) + genes[i][j-1]] -
+										cost_matrix[genes[m][j]*(v_size+1) + genes[i][j]] -
+										cost_matrix[genes[m][j-1]*(v_size+1) + genes[i][j-1]]);
+							}
+						}
+						// state with a lower cost and better than the states in the heap, hence a good state
+						if(new_cost <= this->cost)
+						{
+							if(heap.get_heap_size() < beam_size or (new_cost < heap.read_max_cost()))
+							{
+								neighbour_id temp_neighbour = neighbour_id(i, j, 1, new_cost);
+								heap.push(temp_neighbour);
+							}
+						}
+					}
+					// calculate the new cost due to "RIGHT" swapping
+					if(j != string_length-1)
+					{
+						float new_cost = this->cost;
+						for(int m=0; m<K; m++)
+						{
+							if(m!= i)
+							{
+								new_cost += 	(cost_matrix[genes[m][j+1]*(v_size+1) + genes[i][j]]+
+										cost_matrix[genes[m][j]*(v_size+1) + genes[i][j+1]]-
+										cost_matrix[genes[m][j]*(v_size+1) + genes[i][j]]-
+										cost_matrix[genes[m][j+1]*(v_size+1) + genes[i][j+1]]);
+							}
+						}
+						// state with lower cost
+						if(new_cost <= this->cost)
+						{
+							// state is batter than the worst state in the heap
+							if(heap.get_heap_size() < beam_size or (new_cost < heap.read_max_cost()))
+							{
+								neighbour_id temp_neighbour = neighbour_id(i, j, 0, new_cost);
+								heap.push(temp_neighbour);
+							}
+						}
+					}
+				}
+			}
+		}
+		// ids to real neighbours
+		vector<neighbour_id> k_best_neighbour_ids = heap.get_k_best_neighbour_ids();
+		int neighbour_id_size = k_best_neighbour_ids.size();
+		for(int i=0; i<neighbour_id_size; i++)
+		{
+			// fatching ith neighbour info
+			neighbour_id ith_neighbour_id = k_best_neighbour_ids[i];
+			int 	string_index = ith_neighbour_id.get_string_index(), dash_index = ith_neighbour_id.get_dash_index(),
+				move_left = ith_neighbour_id.get_move_left();
+			float cost = ith_neighbour_id.get_cost();
+			//creating a state
+			state temp_neighbour = state();
+			for(int j=0; j<K; j++)
+			{
+				if(j != string_index)
+					temp_neighbour.push_init_seq(genes[j]);
+				else
+					temp_neighbour.push_init_seq(swap_string(genes[j], dash_index, move_left));
+				temp_neighbour.modify_cost(cost);
+			}
+			neighbours.push_back(temp_neighbour);
+		}
 	}
-	else
+	// random walk, non-tabu, non-restart, non-stochastic
+	if(prob_grd_rnd==0 and not tabu and not restart and not stochastic)
 	{
 		// random walk
 		srand(time(0));
-		for(int i=0; i<K; i++)
+		for(int i=0; i<beam_size; i++)
 		{
 			state neighbour = this->get_random_shuffling();
 			neighbours.push_back(neighbour);

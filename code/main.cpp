@@ -77,10 +77,19 @@ int main()
 	}
 	// ------------------------------------------- file PARSING end ---------------------------------------------------
 	// ------------------------------------------- random walk example start-------------------------------------------
-	state1.print();
-	vector<state> neigh_states = state1.neighbourhood_states(0, false, false, false, 3);
-	for(int i=0; i< neigh_states.size(); i++)
-		neigh_states[i].print();
+//	state1.print();
+//	vector<state> neigh_states = state1.neighbourhood_states(0, false, false, false, 3);
+//	for(int i=0; i< neigh_states.size(); i++)
+//		neigh_states[i].print();
 	// ------------------------------------------- random walk example end-------------------------------------------
+	// ------------------------------------------- greedy best k neighbours example start-------------------------------------------
+	state1.print();
+	vector<state> neigh_states = state1.neighbourhood_states(1, false, false, false, 3);
+	for(int i=0; i< neigh_states.size(); i++)
+	{	
+		neigh_states[i].print();
+		cout << neigh_states[i].get_cost() << endl;
+	}	
+	// ------------------------------------------- greedy best k neighbour example end-------------------------------------------
 	return 0;
 }
