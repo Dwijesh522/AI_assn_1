@@ -14,6 +14,10 @@ state::state()
 	this->cost = 0;
 	this->string_length = 0;
 }
+float state::get_cost()
+{
+	return cost;
+}
 void state::modify_cost(float cost)
 {
 	this->cost = cost;

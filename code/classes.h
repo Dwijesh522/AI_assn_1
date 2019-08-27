@@ -12,22 +12,6 @@ extern int K;
 extern float *cost_matrix; // Matching array
 extern vector<char> vocab;
 
-class state
-{
-private:
-	int string_length;
-	vector<vector<int>> genes;
-	float cost;
-public:
-	state();
-	void push_gene_seq(vector<int>);
-	void push_init_seq(vector<int> p);
-	vector<state> neighbourhood_states(float prob_grd_rnd, bool tabu, bool restart, bool stochastic, int beam_size);
-	state get_random_shuffling();
-	float get_cost();
-	void modify_cost(float);
-	void print();
-};
 class neighbour_id
 {
 	private:
@@ -51,4 +35,20 @@ class k_max_heap
 		float read_max_cost();
 		int get_heap_size();
 		vector<neighbour_id> get_k_best_neighbour_ids();
+};
+class state
+{
+private:
+	int string_length;
+	vector<vector<int>> genes;
+	float cost;
+public:
+	state();
+	void push_gene_seq(vector<int>);
+	void push_init_seq(vector<int> p);
+	vector<state> neighbourhood_states(float prob_grd_rnd, bool tabu, bool restart, bool stochastic, int beam_size);
+	state get_random_shuffling();
+	float get_cost();
+	void modify_cost(float);
+	void print();
 };

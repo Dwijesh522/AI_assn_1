@@ -1,3 +1,2 @@
 command line to compile:
-	
-	g++ main.cpp state.cpp
+	g++ main.cpp state.cpp neighbour_id.cpp k_max_heap.cpp	
