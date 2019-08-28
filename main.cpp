@@ -39,6 +39,7 @@ typedef struct thread_data
   int beam_size;
   int string_length;
   int max_string_length;
+  time_point<system_clock> start_time;
 }  thread_data;
 //function for MultiThreading
 void* search(void* arg)
@@ -51,12 +52,13 @@ void* search(void* arg)
   int beam_size = data -> beam_size;
   int string_length = data -> string_length;
   int max_string_length = data -> max_string_length;
+  auto start_time = data -> start_time;
   int iter_num = 0; //number of iterations with no change in global minimum
   vector<state> temp_begin_states;
   while(string_length <= max_string_length)
   {
-    auto current_time = duration_cast<milliseconds>(system_clock::now());
-    while(iter_num < iter_threshold && duration_cast<milliseconds>(system_clock::now()) < end_time - 1)
+    auto current_time = (system_clock::now());
+    while(iter_num < iter_threshold && duration_cast<milliseconds>(current_time - start_time).count() < Time - 1)
     {
       float temp_min = min_cost;
       state temp_result = result;
@@ -130,6 +132,7 @@ void* search(void* arg)
 //MAIN function
 int main()
 {
+  auto start_time = (system_clock::now());
 	state state1 = state();
   int length_max = 0;
   int sum_lengths = 0;
@@ -141,7 +144,6 @@ int main()
 	{
 		getline(inp, line);
 		float Time = 60*1000*stof(line); //time in milliseconds
-    auto end_time = duration_cast<milliseconds>(system_clock::now()) + Time;
 		getline(inp, line);
 		v_size = stoi(line);
 		getline(inp, line);
@@ -222,10 +224,11 @@ int main()
       start,
       false,
       false,
-      true,
+      false,
       10,//beam_size;
       length_max+i,//string_length;
       sum_lengths,//max_string_length
+      start_time
     };
     pthread_create(&threads[i], NULL, search, (void*)(&temp_data));
   }
