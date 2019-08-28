@@ -31,7 +31,7 @@ void state::print()
 			cout << genes[i][j] << " ";
 		cout << endl;
 	}
-	cout << "cost of this state is: " << this->cost << endl;
+	cout << "change in cost for this state is: " << this->cost << endl;
 	cout << "string length: " << string_length << endl;
 }
 // add a gen sequence to state

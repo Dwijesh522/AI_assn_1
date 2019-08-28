@@ -67,6 +67,7 @@ int main()
 			{
 				float temp;
 				inp >> temp;
+				cost_matrix[i*(v_size + 1) + j] = temp;
 			}
 		}
 		// pointer is in the same line of cost matrix.
