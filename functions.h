@@ -74,9 +74,9 @@ bool compare_states (state s1, state s2)
   return (s1.get_cost() < s2.get_cost());
 }
 
-float prob_greedy(state s)
+float prob_greedy()
 {
 	float res = 1;
-	//INCOMPELETE
+	res = ((float) rand() / (RAND_MAX));
 	return res;
 }

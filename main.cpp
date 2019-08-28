@@ -19,6 +19,7 @@
 using namespace std;
 using namespace std::chrono;
 
+float random_walk_threshold = 0.02;	// out of every 100 moves 2 will be the random walk
 float dash_cost;
 float Time;
 int v_size;
@@ -32,101 +33,92 @@ float end_time;
 //Data for the multithreading function
 typedef struct thread_data
 {
-  vector<state> begin_states;
-  bool tabu;
-  bool restart;
-  bool stochastic;
-  int beam_size;
-  int string_length;
-  int max_string_length;
-  time_point<system_clock> start_time;
+	vector<state> begin_states;
+	bool tabu;
+	bool restart;
+	bool stochastic;
+	int beam_size;
+	int string_length;
+	int max_string_length;
+	time_point<system_clock> start_time;
 }  thread_data;
 //function for MultiThreading
 void* search(void* arg)
 {
-  thread_data*  data = (thread_data*)arg;
-  vector<state> begin_states = data -> begin_states;
-  bool tabu = data -> tabu;
-  bool restart = data -> restart;
-  bool stochastic = data -> stochastic;
-  int beam_size = data -> beam_size;
-  int string_length = data -> string_length;
-  int max_string_length = data -> max_string_length;
-  auto start_time = data -> start_time;
-  int iter_num = 0; //number of iterations with no change in global minimum
-  vector<state> temp_begin_states;
-  while(string_length <= max_string_length)
-  {
-    auto current_time = (system_clock::now());
-    while(iter_num < iter_threshold && duration_cast<milliseconds>(current_time - start_time).count() < Time - 1)
-    {
-      float temp_min = min_cost;
-      state temp_result = result;
-      vector<state> random, greedy; //neighbour and greedy preferred states of all k^2 neighbours
-      int n1 = 0; // n1 -> number of start states preferring random walk
-      int n2; // n2 -> number of start states preferring greedy climbing
-      for(int i=0; i<beam_size; i++)
-      {
-        float prob = prob_greedy(begin_states[i]);
-        vector<state> neighs = begin_states[i].neighbourhood_states(prob, tabu, restart, stochastic, beam_size);
-        if(prob < 0.5)
-        {
-          for(int j=0; j<beam_size; j++)
-          {
-            random.push_back(neighs[j]);
-            n1++;
-          }
-        }
-        else
-        {
-          for(int j=0; j<beam_size; j++)
-          {
-            greedy.push_back(neighs[j]);
-          }
-        }
-      }
-      n2 = beam_size - n1;
-      srand(time(0));
-      int n1_ = n1 * beam_size;
-      int n2_ = n2 * beam_size;
-      for(int j=0; j<n1; j++)
-      {
-        int x = rand()%n1_;
-        float temp_cost = random[x].get_cost();
-        if(temp_min > temp_cost)
-        {
-          temp_min = temp_cost;
-          temp_result = random[x];
-        }
-        temp_begin_states.push_back(random[x]);
-      }
-      sort(greedy.begin(), greedy.end(), compare_states);
-      if(n2 != 0 && temp_min > greedy[0].get_cost())
-      {
-        temp_min = greedy[0].get_cost();
-        temp_result = greedy[0];
-      }
-      for(int j=0; j<n2; j++)
-      {
-        temp_begin_states.push_back(greedy[j]);
-      }
+	thread_data*  data = (thread_data*)arg;
+	vector<state> begin_states = data -> begin_states;
+	bool tabu = data -> tabu;
+	bool restart = data -> restart;
+	bool stochastic = data -> stochastic;
+	int beam_size = data -> beam_size;
+	int string_length = data -> string_length;
+	int max_string_length = data -> max_string_length;
+	auto start_time = data -> start_time;
+	int iter_num = 0; //number of iterations with no change in global minimum
+	vector<state> temp_begin_states;
+	while(string_length <= max_string_length)
+	{
+		auto current_time = (system_clock::now());
+		while(iter_num < iter_threshold && duration_cast<milliseconds>(current_time - start_time).count() < Time - 1)
+		{
+			float temp_min = min_cost;
+			state temp_result = result;
+			vector<state> random, greedy; //neighbour and greedy preferred states of all k^2 neighbours
+			int n1 = 0; // n1 -> number of start states preferring random walk
+			int n2; // n2 -> number of start states preferring greedy climbing
+			for(int i=0; i<beam_size; i++)
+			{
+				float prob = prob_greedy();	// radom value from 0 to 1
+				vector<state> neighs = begin_states[i].neighbourhood_states(prob, tabu, restart, stochastic, beam_size);
+				if(prob < random_walk_threshold)
+				{
+					for(int j=0; j<beam_size; j++)
+			  		{
+						random.push_back(neighs[j]);
+						n1++;
+					}
+				}
+				else	for(int j=0; j<beam_size; j++)	greedy.push_back(neighs[j]);
+	      		}
+			n2 = beam_size - n1;
+	      		srand(time(0));
+	      		int n1_ = n1 * beam_size;
+	      		int n2_ = n2 * beam_size;
+	      		for(int j=0; j<n1; j++)
+	      		{
+				int x = rand()%n1_;
+				float temp_cost = random[x].get_cost();
+				if(temp_min > temp_cost)
+				{
+		 	 		temp_min = temp_cost;
+					temp_result = random[x];
+				}
+				temp_begin_states.push_back(random[x]);
+	      		}
+	      		sort(greedy.begin(), greedy.end(), compare_states);
+	      		if(n2 != 0 && temp_min > greedy[0].get_cost())
+	      		{
+				temp_min = greedy[0].get_cost();
+				temp_result = greedy[0];
+	      		}
+	     		for(int j=0; j<n2; j++)	temp_begin_states.push_back(greedy[j]);
 
-      begin_states =  temp_begin_states;
-      temp_begin_states.clear();
-      if(temp_min < min_cost)
-      {
-        iter_num = 0;
-        min_cost = temp_min;
-        result = temp_result;
-      }
-      else
-      {
-        iter_num++;
-      }
-    }
-    string_length += 4;
-  }
-  pthread_exit(NULL);
+	      		begin_states =  temp_begin_states;
+	      		temp_begin_states.clear();
+	      		if(temp_min < min_cost)
+	     		{
+				iter_num = 0;
+				min_cost = temp_min;					// synchronize it ############
+				result = temp_result;
+	      		}
+	      		else	iter_num++;
+    		}
+    		if(iter_num < iter_threshold)	// running out of time	 ####################
+    			break;
+		string_length += 4;
+    					// modify the beam_size states ##################
+	}
+	pthread_exit(NULL);
 }
 
 //MAIN function
@@ -157,9 +149,9 @@ int main()
 		{
 			getline(inp, line);
 			vector<int> temp;
-      int len = line.length();
-      sum_lengths += len;
-      if(len > length_max) length_max = len;
+      			int len = line.length();
+		      	sum_lengths += len;
+		      	if(len > length_max) length_max = len;
 			for (int j = 0; j < len; j++)
 			{
 				char temp1 = line[j];

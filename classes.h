@@ -11,7 +11,7 @@ extern int v_size;
 extern int K;
 extern float *cost_matrix; // Matching array
 extern vector<char> vocab;
-
+extern float random_walk_threshold;
 class neighbour_id
 {
 	private:
