@@ -5,6 +5,8 @@ cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	flo
 cost_matrix	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^ float *cost_matrix; \/\/ Matching array$/;"	v	language:C++
 dash_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^ float dash_cost;$/;"	v	language:C++
 dash_index	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		int string_index, dash_index, move_left;$/;"	m	language:C++	class:neighbour_id
+delete_push_before	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^vector<int> delete_push_before(vector<int> gene, int char_index, int target_index)$/;"	f	language:C++
+delete_push_before	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.h	/^vector<int> delete_push_before(vector<int> gene, int char_index, int target_index);$/;"	p	language:C++
 genes	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	vector<vector<int>> genes;$/;"	m	language:C++	class:state
 get_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		float get_cost();$/;"	p	language:C++	class:neighbour_id
 get_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	float get_cost();$/;"	p	language:C++	class:state
@@ -12,12 +14,21 @@ get_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/neighbour_id
 get_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^float state::get_cost()$/;"	f	language:C++	class:state
 get_dash_index	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		int get_dash_index();$/;"	p	language:C++	class:neighbour_id
 get_dash_index	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/neighbour_id.cpp	/^int neighbour_id::get_dash_index()$/;"	f	language:C++	class:neighbour_id
+get_dash_indices	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^vector<int> get_dash_indices(vector<int> str)$/;"	f	language:C++
+get_gene_sequences	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	vector<vector<int>> get_gene_sequences();$/;"	p	language:C++	class:state
+get_gene_sequences	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^vector<vector<int>> state::get_gene_sequences()$/;"	f	language:C++	class:state
 get_heap_size	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		int get_heap_size();$/;"	p	language:C++	class:k_max_heap
 get_heap_size	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/k_max_heap.cpp	/^int k_max_heap::get_heap_size()$/;"	f	language:C++	class:k_max_heap
+get_intergene_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^float get_intergene_cost(vector<int> gene1, vector<int> gene2)$/;"	f	language:C++
+get_intergene_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.h	/^float get_intergene_cost(vector<int> gene1, vector<int> gene2);$/;"	p	language:C++
+get_k_beam_points	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^vector<state> get_k_beam_points(vector<vector<int>> gene_sequences, int state_length, int number_of_states)$/;"	f	language:C++
+get_k_beam_points	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.h	/^vector<state> get_k_beam_points(vector<vector<int>> gene_sequences, int state_length, int number_of_states);$/;"	p	language:C++
 get_k_best_neighbour_ids	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		vector<neighbour_id> get_k_best_neighbour_ids();$/;"	p	language:C++	class:k_max_heap
 get_k_best_neighbour_ids	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/k_max_heap.cpp	/^vector<neighbour_id> k_max_heap::get_k_best_neighbour_ids()$/;"	f	language:C++	class:k_max_heap
 get_move_left	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		int get_move_left();$/;"	p	language:C++	class:neighbour_id
 get_move_left	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/neighbour_id.cpp	/^int neighbour_id::get_move_left()$/;"	f	language:C++	class:neighbour_id
+get_number_of_dashes	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^int get_number_of_dashes(vector<int> gene)$/;"	f	language:C++
+get_number_of_dashes	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.h	/^int get_number_of_dashes(vector<int> gene);$/;"	p	language:C++
 get_random_shuffling	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	state get_random_shuffling();$/;"	p	language:C++	class:state
 get_random_shuffling	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^state state::get_random_shuffling()$/;"	f	language:C++	class:state
 get_string_index	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		int get_string_index();$/;"	p	language:C++	class:neighbour_id
@@ -52,6 +63,8 @@ state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^cla
 state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^state::state()$/;"	f	language:C++	class:state
 string_index	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		int string_index, dash_index, move_left;$/;"	m	language:C++	class:neighbour_id
 string_length	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	int string_length;$/;"	m	language:C++	class:state
+swap_string	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^vector<int> swap_string(vector<int> gene, int index, int prob_left_move)$/;"	f	language:C++
+swap_string	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.h	/^vector<int> swap_string(vector<int> gene, int index, int prob_left_move);$/;"	p	language:C++
 Time	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^ float Time;$/;"	v	language:C++
 vocab	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^ vector<char> vocab;$/;"	v	language:C++
 v_size	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^ int v_size;$/;"	v	language:C++

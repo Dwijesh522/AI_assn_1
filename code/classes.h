@@ -51,4 +51,5 @@ public:
 	float get_cost();
 	void modify_cost(float);
 	void print();
+	vector<vector<int>> get_gene_sequences();
 };

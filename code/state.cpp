@@ -18,6 +18,10 @@ float state::get_cost()
 {
 	return cost;
 }
+vector<vector<int>> state::get_gene_sequences()
+{
+	return genes;
+}
 void state::modify_cost(float cost)
 {
 	this->cost = cost;
@@ -113,7 +117,7 @@ vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool re
 	// ----------------------------------------------------------------------------------------------
 		
 	// Greedy best neighbour, non-tabu, non-restart, non-stochastic
-	if(prob_grd_rnd==1 and not tabu and not restart and not stochastic)
+	if(prob_grd_rnd>=0.5 and not tabu and not restart and not stochastic)
 	{
 		k_max_heap heap = k_max_heap(beam_size);
 		for(int i=0; i<K; i++)	// ith string
@@ -200,7 +204,7 @@ vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool re
 		}
 	}
 	// random walk, non-tabu, non-restart, non-stochastic
-	if(prob_grd_rnd==0 and not tabu and not restart and not stochastic)
+	if(prob_grd_rnd<0.5 and not tabu and not restart and not stochastic)
 	{
 		// random walk
 		srand(time(0));

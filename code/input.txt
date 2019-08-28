@@ -2,10 +2,10 @@
 4
 A, B, C, D
 4
-AB--CD
--CD-A-
-AAB-C-
-B-A--C
+AB
+-CAB
+AABA
+B-CB
 3
 0 2 2 2 1
 2 0 2 2 1
