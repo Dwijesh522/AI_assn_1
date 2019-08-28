@@ -1,5 +1,6 @@
 #include "functions.h"
 #include "classes.h"
+#include <iostream>
 #include<vector>
 using namespace std;
 
@@ -89,7 +90,7 @@ vector<int> delete_push_before(vector<int> gene, int char_index, int target_inde
 // remember to seed for random function
 vector<state> get_k_beam_points(vector<vector<int>> gene_sequences, int state_length, int number_of_states)
 {
-	srand(time(0));
+//	srand(time(0));
 	vector<state> k_beam_points;
 	// equalising each string length to state_length
 	for(int i=0; i<K; i++)
@@ -109,8 +110,8 @@ vector<state> get_k_beam_points(vector<vector<int>> gene_sequences, int state_le
 		{
 			vector<int> gene = gene_sequences[j];
 			//0.5 probability of selecting this string
-			int prob_string = rand()%2;
-			if(prob_string)
+			int prob_string = ((float) rand() / (RAND_MAX));
+			if(prob_string >= 0.2)									// changable
 			{
 				// finding the dash in this string
 				for(int m=0; m<state_length; m++)	// dash index
@@ -118,11 +119,11 @@ vector<state> get_k_beam_points(vector<vector<int>> gene_sequences, int state_le
 					if(gene[m] == v_size)	// a dash
 					{
 						//0.5 probability of selecting this dash
-						int prob_dash = rand()%2;
-						if(prob_dash)
+						int prob_dash = ((float) rand() / (RAND_MAX));
+						if(prob_dash >= 0.3)
 						{
 							// selecting index of jump
-							int random_jump_index = rand()%K;
+							int random_jump_index = rand()%state_length;
 							gene = delete_push_before(gene, m, random_jump_index);
 						}
 					}

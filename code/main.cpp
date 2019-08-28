@@ -13,13 +13,13 @@
 #include "functions.h"
 
 #define Num_Threads 4
-#define iter_threshold 100
+#define iter_threshold 3000
 
 using namespace std;
 using namespace std::chrono;
 
-int beam_size = 10;
-float random_walk_threshold = 0.02;	// out of every 100 moves 2 will be the random walk
+int beam_size = 20;
+float random_walk_threshold = 0.1;	// out of every 100 moves 2 will be the random walk
 float dash_cost;
 float Time;
 int v_size;
@@ -86,15 +86,12 @@ void* search(void* arg)
 				if(prob < random_walk_threshold)
 				{
 					for(int j=0; j<neighs.size(); j++)
-			  		{
-						random.push_back(neighs[j]);
-						n1++;
-					}
+						random.push_back(neighs[j]);	
+					n1++;
 				}
 				else	for(int j=0; j<neighs.size(); j++)	greedy.push_back(neighs[j]);		//###############
 	      		}
 			n2 = beam_size - n1;
-	      		srand(time(0));
 	      		int n1_ = random.size();									//##############
 	      		int n2_ = greedy.size();									//#############
 	      		for(int j=0; j<n1; j++)
@@ -141,6 +138,7 @@ void* search(void* arg)
 //MAIN function
 int main()
 {
+	srand(time(0));
   auto start_time = (system_clock::now());
 	state state1 = state();
   int length_max = 0;
@@ -152,7 +150,7 @@ int main()
 	while(inp)
 	{
 		getline(inp, line);
-		float Time = 60*1000*stof(line); //time in milliseconds
+		Time = 60*1000*stof(line); //time in milliseconds
 		getline(inp, line);
 		v_size = stoi(line);
 		getline(inp, line);
@@ -243,11 +241,7 @@ int main()
     );
     pthread_create(&threads[i], NULL, search, (void*)(&temp_data[i]));
   }
-
-  for(int i=0; i<Num_Threads; i++)
-  {
-    pthread_join(threads[i], NULL);
-  }
-  result.print();
+	for(int i=0; i<Num_Threads; i++)	pthread_join(threads[i], NULL);
+	result.print();
 	return 0;
 }

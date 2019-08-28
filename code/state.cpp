@@ -140,7 +140,6 @@ vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool re
 										cost_matrix[genes[m][j-1]*(v_size+1) + genes[i][j-1]]);
 							}
 						}
-						cout << "string_index, dash_index, cost,  left_move: " <<i<<" "<<j<<" "<<new_cost<<endl;
 						// state with a lower cost and better than the states in the heap, hence a good state
 						if(new_cost <= this->cost)
 						{
@@ -165,7 +164,6 @@ vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool re
 										cost_matrix[genes[m][j+1]*(v_size+1) + genes[i][j+1]]);
 							}
 						}
-						cout << "string_index, dash_index, cost,  right_move: " <<i<<" "<<j<<" "<<new_cost<<endl;
 						// state with lower cost
 						if(new_cost <= this->cost)
 						{
@@ -207,7 +205,7 @@ vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool re
 	if(prob_grd_rnd< random_walk_threshold and not tabu and not restart and not stochastic)
 	{
 		// random walk
-		srand(time(0));
+//		srand(time(0));
 		for(int i=0; i<beam_size; i++)
 		{
 			state neighbour = this->get_random_shuffling();
