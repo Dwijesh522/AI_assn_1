@@ -85,7 +85,7 @@ int main()
 	// ------------------------------------------- random walk example end-------------------------------------------
 	// ------------------------------------------- greedy best k neighbours example start-------------------------------------------
 	state1.print();
-	vector<state> neigh_states = state1.neighbourhood_states(1, false, false, false, 3);
+	vector<state> neigh_states = state1.neighbourhood_states(1, false, false, false, 1);
 	for(int i=0; i< neigh_states.size(); i++)
 		neigh_states[i].print();
 	// ------------------------------------------- greedy best k neighbour example end-------------------------------------------
