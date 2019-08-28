@@ -117,7 +117,7 @@ vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool re
 	// ----------------------------------------------------------------------------------------------
 		
 	// Greedy best neighbour, non-tabu, non-restart, non-stochastic
-	if(prob_grd_rnd>=0.5 and not tabu and not restart and not stochastic)
+	if(prob_grd_rnd>= random_walk_threshold and not tabu and not restart and not stochastic)
 	{
 		k_max_heap heap = k_max_heap(beam_size);
 		for(int i=0; i<K; i++)	// ith string
@@ -204,7 +204,7 @@ vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool re
 		}
 	}
 	// random walk, non-tabu, non-restart, non-stochastic
-	if(prob_grd_rnd<0.5 and not tabu and not restart and not stochastic)
+	if(prob_grd_rnd< random_walk_threshold and not tabu and not restart and not stochastic)
 	{
 		// random walk
 		srand(time(0));
@@ -214,6 +214,11 @@ vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool re
 			neighbours.push_back(neighbour);
 		}
 	}
+	// if any state is at local optima then it won't have any greedy good neighbours
+	// or if it does not have any dash then also it won't have any random neighbours as well
+	// so in that case return the current state itself
+	if(neighbours.size() == 0)
+		neighbours.push_back(*this);
 
 	return neighbours;
 }

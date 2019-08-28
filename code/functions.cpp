@@ -134,3 +134,15 @@ vector<state> get_k_beam_points(vector<vector<int>> gene_sequences, int state_le
 	}
 	return k_beam_points;
 }
+//comparator
+bool compare_states (state s1, state s2)
+{
+  return (s1.get_cost() < s2.get_cost());
+}
+
+float prob_greedy()
+{
+	float res = 1;
+	res = ((float) rand() / (RAND_MAX));
+	return res;
+}

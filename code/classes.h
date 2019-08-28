@@ -5,6 +5,8 @@
 using namespace std;
 
 //GLOBAL Variables
+extern int beam_size;
+extern float random_walk_threshold;
 extern float dash_cost;
 extern float Time;
 extern int v_size;

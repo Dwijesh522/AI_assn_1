@@ -1,2 +1,2 @@
 command line to compile:
-	g++ main.cpp state.cpp neighbour_id.cpp k_max_heap.cpp	
+	g++ main.cpp functions.cpp k_max_heap.cpp neighbour_id.cpp state.cpp -pthread	

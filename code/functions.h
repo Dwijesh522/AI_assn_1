@@ -23,3 +23,7 @@ vector<int> delete_push_before(vector<int> gene, int char_index, int target_inde
 // will return k random states of length specified in the parameter list
 // remember to seed for random function
 vector<state> get_k_beam_points(vector<vector<int>> gene_sequences, int state_length, int number_of_states);
+//comparator
+bool compare_states (state s1, state s2);
+
+float prob_greedy();
