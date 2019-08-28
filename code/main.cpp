@@ -31,7 +31,7 @@ state result = state();
 float min_cost = INFINITY;
 float end_time;
 //Data for the multithreading function
-typedef struct thread_data
+struct thread_data
 {
 	vector<state> begin_states;
 	bool tabu;
@@ -40,8 +40,20 @@ typedef struct thread_data
 	int beam_size;
 	int string_length;
 	int max_string_length;
-	time_point<system_clock> start_time;
-}  thread_data;
+	time_point<system_clock> start_time;	
+	thread_data(vector<state> begin_states, bool tabu, bool restart, bool stochastic, int beam_size, int string_length, int max_string_length, time_point<system_clock> start_time)
+	{
+		this->begin_states = begin_states;
+		this->tabu = tabu;
+		this->restart = restart;
+		this->stochastic = stochastic;
+		this->beam_size = beam_size;
+		this->string_length = string_length;
+		this->max_string_length = max_string_length;
+		this->start_time = start_time;
+	}
+	thread_data(){};
+};
 static pthread_mutex_t mutex;
 //function for MultiThreading
 void* search(void* arg)
@@ -214,11 +226,12 @@ int main()
   //------------Main program--------------------
   //MultiThreading starts
   pthread_t threads[Num_Threads];
+  thread_data temp_data[Num_Threads];
   for(int i=0; i<Num_Threads; i++)
   {
     vector<state> start = get_k_beam_points(state1.get_gene_sequences(), length_max+i, beam_size); // random start states
-    thread_data temp_data =
-    {
+     temp_data[i] = thread_data
+    (
       start,
       false,
       false,
@@ -227,8 +240,8 @@ int main()
       length_max+i,//string_length;
       sum_lengths,//max_string_length
       start_time
-    };
-    pthread_create(&threads[i], NULL, search, (void*)(&temp_data));
+    );
+    pthread_create(&threads[i], NULL, search, (void*)(&temp_data[i]));
   }
 
   for(int i=0; i<Num_Threads; i++)

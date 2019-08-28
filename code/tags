@@ -75,7 +75,7 @@ read_max_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/k_max_h
 restart	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	bool restart;$/;"	m	language:C++	struct:thread_data	file:
 result	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^state result = state();$/;"	v	language:C++
 search	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^void* search(void* arg)$/;"	f	language:C++
-start_time	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	time_point<system_clock> start_time;$/;"	m	language:C++	struct:thread_data	file:
+start_time	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	time_point<system_clock> start_time;	$/;"	m	language:C++	struct:thread_data	file:
 state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	state();$/;"	p	language:C++	class:state
 state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^class state$/;"	c	language:C++
 state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^state::state()$/;"	f	language:C++	class:state
@@ -86,8 +86,9 @@ string_length	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cp
 swap_string	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^vector<int> swap_string(vector<int> gene, int index, int prob_left_move)$/;"	f	language:C++
 swap_string	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.h	/^vector<int> swap_string(vector<int> gene, int index, int prob_left_move);$/;"	p	language:C++
 tabu	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	bool tabu;$/;"	m	language:C++	struct:thread_data	file:
-thread_data	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^typedef struct thread_data$/;"	s	language:C++	file:
-thread_data	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^}  thread_data;$/;"	t	language:C++	typeref:struct:thread_data	file:
+thread_data	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	thread_data(){};$/;"	f	language:C++	struct:thread_data
+thread_data	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	thread_data(vector<state> begin_states, bool tabu, bool restart, bool stochastic, int beam_size, int string_length, int max_string_length, time_point<system_clock> start_time)$/;"	f	language:C++	struct:thread_data
+thread_data	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^struct thread_data$/;"	s	language:C++	file:
 Time	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^float Time;$/;"	v	language:C++
 vocab	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^vector<char> vocab;$/;"	v	language:C++
 v_size	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^int v_size;$/;"	v	language:C++
