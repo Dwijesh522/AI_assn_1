@@ -102,6 +102,7 @@ vector<state> get_k_beam_points(vector<vector<int>> gene_sequences, int state_le
 			gene_length++;
 		}
 	}
+
 	// generating (number_of_states) states
 	for(int i=0; i<number_of_states; i++)
 	{
@@ -109,7 +110,7 @@ vector<state> get_k_beam_points(vector<vector<int>> gene_sequences, int state_le
 		for(int j=0; j<K; j++)	// string index
 		{
 			vector<int> gene = gene_sequences[j];
-			//0.5 probability of selecting this string
+			//0.5 probability of selecting thisi string
 			int prob_string = ((float) rand() / (RAND_MAX));
 			if(prob_string >= 0.2)									// changable
 			{

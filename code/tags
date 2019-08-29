@@ -1,6 +1,6 @@
 !_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
 beam_size	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	int beam_size;$/;"	m	language:C++	struct:thread_data	file:
-beam_size	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^int beam_size = 20;$/;"	v	language:C++
+beam_size	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^int beam_size = 1;$/;"	v	language:C++
 begin_states	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	vector<state> begin_states;$/;"	m	language:C++	struct:thread_data	file:
 compare_neighbour_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/k_max_heap.cpp	/^bool compare_neighbour_cost(neighbour_id n1, neighbour_id n2)$/;"	f	language:C++
 compare_states	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^bool compare_states (state s1, state s2)$/;"	f	language:C++

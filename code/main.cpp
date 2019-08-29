@@ -12,13 +12,13 @@
 #include "classes.h"
 #include "functions.h"
 
-#define Num_Threads 4
-#define iter_threshold 3000
+#define Num_Threads 1
+#define iter_threshold 10
 
 using namespace std;
 using namespace std::chrono;
 
-int beam_size = 20;
+int beam_size = 1;
 float random_walk_threshold = 0.1;	// out of every 100 moves 2 will be the random walk
 float dash_cost;
 float Time;
@@ -70,10 +70,11 @@ void* search(void* arg)
 	int iter_num = 0; //number of iterations with no change in global minimum
 	vector<state> temp_begin_states;
 	while(string_length <= max_string_length)
-	{
+	{	
+		cout << "original states: \n";	for(int mn=0; mn< begin_states.size(); mn++)	begin_states[mn].print();
 		auto current_time = (system_clock::now());
 		while(iter_num < iter_threshold && duration_cast<milliseconds>(current_time - start_time).count() < Time - 1)
-		{
+		{	
 			float temp_min = min_cost;
 			state temp_result = result;
 			vector<state> random, greedy; //neighbour and greedy preferred states of all k^2 neighbours
@@ -82,7 +83,11 @@ void* search(void* arg)
 			for(int i=0; i<beam_size; i++)
 			{
 				float prob = prob_greedy();	// radom value from 0 to 1
+				
 				vector<state> neighs = begin_states[i].neighbourhood_states(prob, tabu, restart, stochastic, beam_size);
+				cout << "beam_size " <<beam_size << endl;
+				cout << "neighbour states: \n";	for(int mn=0; mn< neighs.size(); mn++)	neighs[mn].print();
+
 				if(prob < random_walk_threshold)
 				{
 					for(int j=0; j<neighs.size(); j++)
@@ -129,8 +134,8 @@ void* search(void* arg)
     		}
     		if(iter_num < iter_threshold)	// running out of time
     			break;
-		string_length += 4;
-    		begin_states = get_k_beam_points(begin_states[0].get_gene_sequences(), string_length, beam_size);
+		string_length += Num_Threads;
+		begin_states = get_k_beam_points(begin_states[0].get_gene_sequences(), string_length, beam_size);
 	}
 	pthread_exit(NULL);
 }
@@ -139,7 +144,9 @@ void* search(void* arg)
 int main()
 {
 	srand(time(0));
-  auto start_time = (system_clock::now());
+  	bool equal_length = true;
+	int current_length = 0;
+	auto start_time = (system_clock::now());
 	state state1 = state();
   int length_max = 0;
   int sum_lengths = 0;
@@ -165,8 +172,11 @@ int main()
 			getline(inp, line);
 			vector<int> temp;
       			int len = line.length();
+			if(i==0) current_length = len;
+			if( equal_length and current_length != len)	equal_length = false;
 		      	sum_lengths += len;
-		      	if(len > length_max) length_max = len;
+		      	if(len > length_max) 
+				length_max = len;
 			for (int j = 0; j < len; j++)
 			{
 				char temp1 = line[j];
@@ -225,10 +235,12 @@ int main()
   //MultiThreading starts
   pthread_t threads[Num_Threads];
   thread_data temp_data[Num_Threads];
-  for(int i=0; i<Num_Threads; i++)
+  int i0=0;
+  if(equal_length)	i0 = 1;
+  for(int i=i0; i<Num_Threads + i0; i++)
   {
     vector<state> start = get_k_beam_points(state1.get_gene_sequences(), length_max+i, beam_size); // random start states
-     temp_data[i] = thread_data
+     temp_data[i-i0] = thread_data
     (
       start,
       false,
@@ -239,7 +251,7 @@ int main()
       sum_lengths,//max_string_length
       start_time
     );
-    pthread_create(&threads[i], NULL, search, (void*)(&temp_data[i]));
+    pthread_create(&threads[i-i0], NULL, search, (void*)(&temp_data[i-i0]));
   }
 	for(int i=0; i<Num_Threads; i++)	pthread_join(threads[i], NULL);
 	result.print();

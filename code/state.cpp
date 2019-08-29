@@ -61,7 +61,7 @@ void state::push_init_seq(vector<int> p)
 // if no neighbour state exists then returns an empty state.
 state state::get_random_shuffling()
 {
-	state neighbour;	
+	state neighbour = *this;	
 	int random_str_ind = rand()%K;
 	bool any_dash = false;
 	int counter = 0;	//number of strings that does not have any dashes
@@ -135,7 +135,7 @@ vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool re
 							if(m != i)
 							{
 								new_cost += 	(cost_matrix[genes[m][j-1]*(v_size+1) + genes[i][j]] +
-										cost_matrix[genes[m][j]*(v_size+1) + genes[i][j-1]] -
+									cost_matrix[genes[m][j]*(v_size+1) + genes[i][j-1]] -
 										cost_matrix[genes[m][j]*(v_size+1) + genes[i][j]] -
 										cost_matrix[genes[m][j-1]*(v_size+1) + genes[i][j-1]]);
 							}
