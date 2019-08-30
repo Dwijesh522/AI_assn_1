@@ -13,15 +13,16 @@
 #include "functions.h"
 
 #define Num_Threads 4
-#define iter_threshold 700
+#define iter_threshold 15
 
 using namespace std;
 using namespace std::chrono;
 
 string input_file, output_file;
-int beam_size = 60;
-float random_walk_threshold = 0.25;	// out of every 100 moves 2 will be the random walk
-int time_threshold = 33;
+int beam_size = 100;
+float random_walk_threshold = 0.15;	// out of every 100 moves 2 will be the random walk
+int time_threshold2 = 1000;
+int time_threshold1 = 3000;
 float dash_cost;
 float Time;
 int v_size;
@@ -59,6 +60,7 @@ static pthread_mutex_t mutex;
 //function for MultiThreading
 void* search(void* arg)
 {
+	cout << "starting search...\n";
 	thread_data*  data = (thread_data*)arg;
 	vector<state> begin_states = data -> begin_states;
 	bool tabu = data -> tabu;
@@ -71,9 +73,13 @@ void* search(void* arg)
 	vector<state> temp_begin_states;
 	while(string_length <= max_string_length)
 	{
-		cout << string_length << endl;
-		auto t1 = system_clock::now();
-		while(iter_num < iter_threshold && (duration_cast<milliseconds>(system_clock::now() - start_time).count() < Time - beam_size*time_threshold))
+		beam_size = 100 * sigmoid(string_length%4);
+		cout << "beam size: " << beam_size << endl;
+		cout << "string length: " << string_length << endl;
+		cout << "iteration threshold: " << iter_threshold*string_length << endl;
+		while(iter_num < iter_threshold*string_length && (duration_cast<milliseconds>(system_clock::now() - start_time).count() < Time - time_threshold1))
+//		while(iter_num < iter_threshold && (duration_cast<milliseconds>(system_clock::now() - start_time).count() < 10000))
+
 		{
 			float temp_min = min_cost;
 			state temp_result = result;
@@ -83,9 +89,9 @@ void* search(void* arg)
 			for(int i=0; i<beam_size; i++)
 			{
 				float prob = prob_greedy();	// radom value from 0 to 1
-				if( not (duration_cast<milliseconds>(system_clock::now() - start_time).count() < Time - beam_size*time_threshold))	break;
+				if( not (duration_cast<milliseconds>(system_clock::now() - start_time).count() < Time - time_threshold2))	break;
+//				if( not (duration_cast<milliseconds>(system_clock::now() - start_time).count() < 10000))	break;
 				vector<state> neighs = begin_states[i].neighbourhood_states(prob, tabu, restart, stochastic, beam_size);
-
 				if(prob < random_walk_threshold)
 				{
 					for(int j=0; j<neighs.size(); j++)
@@ -130,18 +136,17 @@ void* search(void* arg)
 				pthread_mutex_lock(&mutex);
 				min_cost = temp_min;
 				result = temp_result;
-				result.print();
+//				result.print();
 				pthread_mutex_unlock(&mutex);
 	      		}
 	      		else	iter_num++;
     		}
-				auto t2 = system_clock::now();
-				cout <<"time_dur: " << duration_cast<microseconds>(t2-t1).count() << endl;
-    		if(iter_num < iter_threshold)	// running out of time
+    		if(iter_num < iter_threshold*string_length)	// running out of time
     			break;
 		string_length += Num_Threads;
 		iter_num = 0;
-		begin_states = get_k_beam_points(begin_states[0].get_gene_sequences(), string_length, beam_size);
+//		begin_states = get_k_beam_points(begin_states[0].get_gene_sequences(), string_length, beam_size);
+		begin_states = get_k_beam_points(begin_states[0].get_gene_sequences(), string_length, 200*sigmoid(string_length%4));
 	}
 	pthread_exit(NULL);
 }
@@ -149,6 +154,7 @@ void* search(void* arg)
 //MAIN function
 int main(int argc, char**argv)
 {
+	cout << "parsing start...\n";
 	srand(time(0));
 	input_file = argv[1];
 	output_file = argv[2];
@@ -160,12 +166,13 @@ int main(int argc, char**argv)
   int sum_lengths = 0;
 	// ------------------------------------------- file PARSING start ---------------------------------------------------
 	ifstream inp;
-	inp.open("input.txt");
+	inp.open(input_file);
 	string line;
 	while(inp)
 	{
 		getline(inp, line);
 		Time = 60*1000*stof(line); //time in milliseconds
+		cout << "Time: " << Time << endl;
 		getline(inp, line);
 		v_size = stoi(line);
 		getline(inp, line);
@@ -223,6 +230,7 @@ int main(int argc, char**argv)
 		getline(inp, line);
 		if (line == "#") {break;}
 	}
+	cout << "parsing done...\n";
 	// ------------------------------------------- file PARSING end ---------------------------------------------------
 
 	// ------------------------------------------- random walk example start-------------------------------------------
@@ -245,19 +253,22 @@ int main(int argc, char**argv)
 		for(int i=0; i<K; i++)	state2.push_gene_seq(state1_gene[i]);
 		min_cost = state2.get_cost();
 		result = state2;
-		result.print();
+//		result.print();
 	}
-
   //------------Main program--------------------
   //MultiThreading starts
   pthread_t threads[Num_Threads];
   thread_data temp_data[Num_Threads];
   int i0=0;
   if(equal_length)	i0 = 1;
+  cout << "creating threads...\n";
+  int new_beam_size;
   for(int i=i0; i<Num_Threads + i0; i++)
   {
+//    new_beam_size = beam_size*sigmoid(length_max+i);
     vector<state> start = get_k_beam_points(state1.get_gene_sequences(), length_max+i, beam_size); // random start states
-     temp_data[i-i0] = thread_data
+    if(i==i0)	start[0].print(); 
+    temp_data[i-i0] = thread_data
     (
       start,
       false,
@@ -270,7 +281,9 @@ int main(int argc, char**argv)
     pthread_create(&threads[i-i0], NULL, search, (void*)(&temp_data[i-i0]));
   }
 	for(int i=0; i<Num_Threads; i++)	pthread_join(threads[i], NULL);
-	cout << duration_cast<milliseconds>(system_clock::now() - start_time).count() /1000.0 << endl;
+	cout << duration_cast<microseconds>(system_clock::now() - start_time).count() /1000000.0 << endl;
 	result.print();
+	cout << duration_cast<microseconds>(system_clock::now() - start_time).count() /1000000.0 << endl;
+	cout << "threads joined...\n";
 	return 0;
 }

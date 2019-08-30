@@ -2,7 +2,7 @@
 #include "classes.h"
 #include<vector>
 using namespace std;
-
+float sigmoid(int);
 // returns indices of the dashes present in argument string
 vector<int> get_dash_indices(vector<int> str);
 

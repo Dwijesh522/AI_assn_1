@@ -1,9 +1,13 @@
+#include<cmath>
 #include "functions.h"
 #include "classes.h"
 #include <iostream>
 #include<vector>
 using namespace std;
-
+float sigmoid(int string_length)
+{
+	return exp(string_length)/(3+ exp(string_length));
+}
 // returns indices of the dashes present in argument string
 vector<int> get_dash_indices(vector<int> str)
 {
