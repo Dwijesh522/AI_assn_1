@@ -1,0 +1,5 @@
+1
+None
+Algorithm: Stochastic Local Beam Search (modified) implemented using multithreading
+Explanation of Implementation:
+Search locally for each possible string length that the optimal result can have (l >= maximum of input string lengths and l<= sum of input string lengths) upon different threads. In the search for each length, start with 'beam_size' number of intitial states and choose each of the current states with p & 1-p probabilities for greedy proceedings and stochastic proceedings respectively. Let n1 and n2 be the number of current states chosen for greedy proceedings and stochastic proceedings respectively. Now, choose n1 best states out of all the neighbours of nodes chosen for greedy. And pick n2 states randomly from the neighbours of the n2 nodes chosen for stochastic process. Exit the thread when the global optimum doesn't change for a threshold number of iterations. When time's up, output the optimal result found.
