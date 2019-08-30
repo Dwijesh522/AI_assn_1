@@ -13,14 +13,15 @@
 #include "functions.h"
 
 #define Num_Threads 4
-#define iter_threshold 15
+#define iter_threshold 100
 
 using namespace std;
 using namespace std::chrono;
 
 string input_file, output_file;
-int beam_size = 100;
-float random_walk_threshold = 0.15;	// out of every 100 moves 2 will be the random walk
+int beam_size = 20;
+int beam_factor = 20;
+float random_walk_threshold = 0.4;	// out of every 100 moves 2 will be the random walk
 int time_threshold2 = 1000;
 int time_threshold1 = 3000;
 float dash_cost;
@@ -60,7 +61,6 @@ static pthread_mutex_t mutex;
 //function for MultiThreading
 void* search(void* arg)
 {
-	cout << "starting search...\n";
 	thread_data*  data = (thread_data*)arg;
 	vector<state> begin_states = data -> begin_states;
 	bool tabu = data -> tabu;
@@ -73,12 +73,9 @@ void* search(void* arg)
 	vector<state> temp_begin_states;
 	while(string_length <= max_string_length)
 	{
-		beam_size = 100 * sigmoid(string_length%4);
-		cout << "beam size: " << beam_size << endl;
-		cout << "string length: " << string_length << endl;
-		cout << "iteration threshold: " << iter_threshold*string_length << endl;
-		while(iter_num < iter_threshold*string_length && (duration_cast<milliseconds>(system_clock::now() - start_time).count() < Time - time_threshold1))
-//		while(iter_num < iter_threshold && (duration_cast<milliseconds>(system_clock::now() - start_time).count() < 10000))
+		beam_size = beam_factor * sigmoid(string_length%4);
+//		while(iter_num < iter_threshold*string_length && (duration_cast<milliseconds>(system_clock::now() - start_time).count() < Time - time_threshold1))
+		while(iter_num < 2500 && (duration_cast<milliseconds>(system_clock::now() - start_time).count() < Time - time_threshold1))
 
 		{
 			float temp_min = min_cost;
@@ -141,12 +138,13 @@ void* search(void* arg)
 	      		}
 	      		else	iter_num++;
     		}
-    		if(iter_num < iter_threshold*string_length)	// running out of time
+//    		if(iter_num < iter_threshold*string_length)	// running out of time
+		if(iter_num < 2500)
     			break;
-		string_length += Num_Threads;
+		string_length += 1;										//@@@@@@@@@@@@@
 		iter_num = 0;
 //		begin_states = get_k_beam_points(begin_states[0].get_gene_sequences(), string_length, beam_size);
-		begin_states = get_k_beam_points(begin_states[0].get_gene_sequences(), string_length, 200*sigmoid(string_length%4));
+		begin_states = get_k_beam_points(begin_states[0].get_gene_sequences(), string_length, beam_factor*sigmoid(string_length%4));
 	}
 	pthread_exit(NULL);
 }
@@ -154,7 +152,6 @@ void* search(void* arg)
 //MAIN function
 int main(int argc, char**argv)
 {
-	cout << "parsing start...\n";
 	srand(time(0));
 	input_file = argv[1];
 	output_file = argv[2];
@@ -172,7 +169,6 @@ int main(int argc, char**argv)
 	{
 		getline(inp, line);
 		Time = 60*1000*stof(line); //time in milliseconds
-		cout << "Time: " << Time << endl;
 		getline(inp, line);
 		v_size = stoi(line);
 		getline(inp, line);
@@ -230,7 +226,6 @@ int main(int argc, char**argv)
 		getline(inp, line);
 		if (line == "#") {break;}
 	}
-	cout << "parsing done...\n";
 	// ------------------------------------------- file PARSING end ---------------------------------------------------
 
 	// ------------------------------------------- random walk example start-------------------------------------------
@@ -261,12 +256,11 @@ int main(int argc, char**argv)
   thread_data temp_data[Num_Threads];
   int i0=0;
   if(equal_length)	i0 = 1;
-  cout << "creating threads...\n";
-  int new_beam_size;
+  int new_beam_size, fourth_part = (sum_lengths-length_max)/4;
   for(int i=i0; i<Num_Threads + i0; i++)
   {
 //    new_beam_size = beam_size*sigmoid(length_max+i);
-    vector<state> start = get_k_beam_points(state1.get_gene_sequences(), length_max+i, beam_size); // random start states
+    vector<state> start = get_k_beam_points(state1.get_gene_sequences(), length_max+ (i-i0)*fourth_part, beam_size); // random start states
     if(i==i0)	start[0].print(); 
     temp_data[i-i0] = thread_data
     (
@@ -275,15 +269,12 @@ int main(int argc, char**argv)
       false,
       false,
       beam_size,//beam_size;
-      length_max+i,//string_length;
+      length_max+ (i-i0)*fourth_part,//string_length;
       sum_lengths//max_string_length
     );
     pthread_create(&threads[i-i0], NULL, search, (void*)(&temp_data[i-i0]));
   }
 	for(int i=0; i<Num_Threads; i++)	pthread_join(threads[i], NULL);
-	cout << duration_cast<microseconds>(system_clock::now() - start_time).count() /1000000.0 << endl;
 	result.print();
-	cout << duration_cast<microseconds>(system_clock::now() - start_time).count() /1000000.0 << endl;
-	cout << "threads joined...\n";
 	return 0;
 }

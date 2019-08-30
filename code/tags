@@ -1,6 +1,7 @@
 !_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+beam_factor	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^int beam_factor = 20;$/;"	v	language:C++
 beam_size	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	int beam_size;$/;"	m	language:C++	struct:thread_data	file:
-beam_size	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^int beam_size = 100;$/;"	v	language:C++
+beam_size	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^int beam_size = 20;$/;"	v	language:C++
 begin_states	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	vector<state> begin_states;$/;"	m	language:C++	struct:thread_data	file:
 compare_states	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^bool compare_states (state s1, state s2)$/;"	f	language:C++
 compare_states	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.h	/^bool compare_states (state s1, state s2);$/;"	p	language:C++
@@ -15,10 +16,12 @@ end_time	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^f
 genes	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	vector<vector<int> > genes;$/;"	m	language:C++	class:state
 get_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		float get_cost();$/;"	p	language:C++	class:neighbour_id
 get_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	float get_cost();$/;"	p	language:C++	class:state
+get_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^float state::get_cost()$/;"	f	language:C++	class:state
 get_dash_index	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		int get_dash_index();$/;"	p	language:C++	class:neighbour_id
 get_dash_indices	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^vector<int> get_dash_indices(vector<int> str)$/;"	f	language:C++
 get_dash_indices	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.h	/^vector<int> get_dash_indices(vector<int> str);$/;"	p	language:C++
 get_gene_sequences	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	vector<vector<int> > get_gene_sequences();$/;"	p	language:C++	class:state
+get_gene_sequences	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^vector<vector<int> > state::get_gene_sequences()$/;"	f	language:C++	class:state
 get_heap_size	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		int get_heap_size();$/;"	p	language:C++	class:k_max_heap
 get_intergene_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^float get_intergene_cost(vector<int> gene1, vector<int> gene2)$/;"	f	language:C++
 get_intergene_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.h	/^float get_intergene_cost(vector<int> gene1, vector<int> gene2);$/;"	p	language:C++
@@ -29,6 +32,7 @@ get_move_left	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes
 get_number_of_dashes	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^int get_number_of_dashes(vector<int> gene)$/;"	f	language:C++
 get_number_of_dashes	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.h	/^int get_number_of_dashes(vector<int> gene);$/;"	p	language:C++
 get_random_shuffling	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	state get_random_shuffling();$/;"	p	language:C++	class:state
+get_random_shuffling	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^state state::get_random_shuffling()$/;"	f	language:C++	class:state
 get_string_index	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		int get_string_index();$/;"	p	language:C++	class:neighbour_id
 iter_threshold	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	16;"	d	language:C++	file:
 k	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		int k;$/;"	m	language:C++	class:k_max_heap
@@ -39,20 +43,25 @@ main	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^int m
 max_string_length	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	int max_string_length;$/;"	m	language:C++	struct:thread_data	file:
 min_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^float min_cost = INFINITY;$/;"	v	language:C++
 modify_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	void modify_cost(float);$/;"	p	language:C++	class:state
+modify_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^void state::modify_cost(float cost)$/;"	f	language:C++	class:state
 move_left	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		int string_index, dash_index, move_left;$/;"	m	language:C++	class:neighbour_id
 mutex	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^static pthread_mutex_t mutex;$/;"	v	language:C++	file:
 neighbourhood_states	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	vector<state> neighbourhood_states(float prob_grd_rnd, bool tabu, bool restart, bool stochastic, int beam_size);$/;"	p	language:C++	class:state
+neighbourhood_states	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^vector<state> state::neighbourhood_states(float prob_grd_rnd, bool tabu, bool restart, bool stochastic, int beam_size)$/;"	f	language:C++	class:state
 neighbours	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		vector<neighbour_id> neighbours;$/;"	m	language:C++	class:k_max_heap
 neighbour_id	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		neighbour_id(int, int, int, float);$/;"	p	language:C++	class:neighbour_id
 neighbour_id	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^class neighbour_id$/;"	c	language:C++
 Num_Threads	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	15;"	d	language:C++	file:
 print	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	void print();$/;"	p	language:C++	class:state
+print	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^void state::print()$/;"	f	language:C++	class:state
 prob_greedy	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.cpp	/^float prob_greedy()$/;"	f	language:C++
 prob_greedy	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.h	/^float prob_greedy();$/;"	p	language:C++
 push	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		void push(neighbour_id);$/;"	p	language:C++	class:k_max_heap
 push_gene_seq	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	void push_gene_seq(vector<int>);$/;"	p	language:C++	class:state
+push_gene_seq	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^void state::push_gene_seq(vector<int> p)$/;"	f	language:C++	class:state
 push_init_seq	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	void push_init_seq(vector<int> p);$/;"	p	language:C++	class:state
-random_walk_threshold	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^float random_walk_threshold = 0.15;	\/\/ out of every 100 moves 2 will be the random walk$/;"	v	language:C++
+push_init_seq	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^void state::push_init_seq(vector<int> p)$/;"	f	language:C++	class:state
+random_walk_threshold	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^float random_walk_threshold = 0.4;	\/\/ out of every 100 moves 2 will be the random walk$/;"	v	language:C++
 read_max_cost	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		float read_max_cost();$/;"	p	language:C++	class:k_max_heap
 restart	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	bool restart;$/;"	m	language:C++	struct:thread_data	file:
 result	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^state result = state();$/;"	v	language:C++
@@ -62,6 +71,7 @@ sigmoid	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/functions.h	/
 start_time	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^time_point<system_clock> start_time = system_clock::now();$/;"	v	language:C++
 state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	state();$/;"	p	language:C++	class:state
 state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^class state$/;"	c	language:C++
+state	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/state.cpp	/^state::state()$/;"	f	language:C++	class:state
 stochastic	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/main.cpp	/^	bool stochastic;$/;"	m	language:C++	struct:thread_data	file:
 string_index	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^		int string_index, dash_index, move_left;$/;"	m	language:C++	class:neighbour_id
 string_length	/home/dwijesh/Documents/sem5/ai/assns/assn1/AI_assn_1/code/classes.h	/^	int string_length;$/;"	m	language:C++	class:state

@@ -48,8 +48,6 @@ void state::print()
 		outdata << '\n';
 	}
 	outdata.close();
-	cout << "change in cost for this state is: " << this->cost << endl;
-	cout << "string length: " << string_length << endl;
 }
 // add a gen sequence to state
 void state::push_gene_seq(vector<int> p)
